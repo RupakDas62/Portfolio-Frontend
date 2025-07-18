@@ -32,6 +32,7 @@ const Projects = () => {
   useEffect(() => {
     const fetchProjects = async () => {
     try {
+      console.log(API)
       const res = await axios.get(`${API}/projects`);
       console.log(res.data);
       setProjects(res.data);
