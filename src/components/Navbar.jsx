@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../redux/slices/authSlice';
 import axios from 'axios';
 
+import API from '../url';
+
 const Navbar = () => {
   const navRef = useRef();
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const Navbar = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/logout', {}, {
+      const res = await axios.post(`${API}/auth/logout`, {}, {
         withCredentials: true,
       });
 
