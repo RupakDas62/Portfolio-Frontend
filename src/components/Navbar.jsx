@@ -3,7 +3,7 @@ import { Link as ScrollLink } from 'react-scroll';
 import { Link, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { useSelector, useDispatch } from 'react-redux';
-import { logout } from '../redux/slices/authSlice';
+import { logout, loginSuccess } from '../redux/slices/authSlice';
 import axios from 'axios';
 
 import API from '../url';
@@ -15,6 +15,30 @@ const Navbar = () => {
 
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const admin = useSelector((state) => state.auth.admin);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const res = await axios.get(`${API}/auth/verify`, {
+          withCredentials: true,
+        });
+
+        if (res.data.success && res.data.admin) {
+          dispatch(
+            loginSuccess({
+              admin: res.data.admin,
+              token: res.data.token || null,
+            })
+          );
+        }
+      } catch (err) {
+        console.log('Not authenticated:', err.response?.data || err.message);
+        dispatch(logout());
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     const links = navRef.current.querySelectorAll('.nav-link');
@@ -32,7 +56,15 @@ const Navbar = () => {
     );
   }, [isAuthenticated]);
 
-  const links = ['home', 'about', 'education', 'skills', 'projects', 'certifications', 'contact'];
+  const links = [
+    'home',
+    'about',
+    'education',
+    'skills',
+    'projects',
+    'certifications',
+    'contact',
+  ];
 
   const handleLogout = async () => {
     try {
@@ -40,8 +72,9 @@ const Navbar = () => {
         withCredentials: true,
       });
 
-      console.log(res);
+      console.log(res.data);
       dispatch(logout());
+      navigate('/');
     } catch (err) {
       console.error('Logout error:', err);
     }
@@ -77,7 +110,6 @@ const Navbar = () => {
             </ScrollLink>
           ))}
 
-          {/* Auth Section */}
           {isAuthenticated ? (
             <div className="flex items-center gap-3">
               <span className="bg-cyan-600 px-2 py-[2px] rounded-full text-xs text-white shadow-md">
