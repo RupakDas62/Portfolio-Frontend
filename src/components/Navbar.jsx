@@ -22,7 +22,7 @@ const Navbar = () => {
         const res = await axios.get(`${API}/auth/verify`, {
           withCredentials: true,
         });
-
+        console.log(res.data)
         if (res.data.success && res.data.admin) {
           dispatch(
             loginSuccess({
