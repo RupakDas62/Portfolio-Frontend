@@ -2,7 +2,7 @@
 const BASE_URL = "http://localhost:5000/api";
 
 // For production (use env variable later)
-const PROD_URL = "https://your-backend.onrender.com/api";
+const PROD_URL = "https://your-backend.onrender.com/apihttps://portfolio-backend-mqnk.onrender.com/";
 
 // Export based on NODE_ENV
 const API = import.meta.env.MODE === "production" ? PROD_URL : BASE_URL;
