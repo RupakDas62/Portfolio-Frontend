@@ -5,6 +5,6 @@ const BASE_URL = "http://localhost:5000/api";
 const PROD_URL = "https://portfolio-backend-mqnk.onrender.com/api";
 
 // Export based on NODE_ENV
-const API = import.meta.env.MODE === "production" ? PROD_URL : BASE_URL;
+const API = PROD_URL;
 
 export default API;
