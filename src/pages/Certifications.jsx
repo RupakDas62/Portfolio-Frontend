@@ -92,7 +92,7 @@ const Certifications = () => {
     form.append("pdf", formData.pdf);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/certifications/add", form);
+      const res = await axios.post(`${API}/certifications/add`, form);
       setCertifications((prev) => [...prev, res.data]); // append new cert
       setShowModal(false);
       setFormData({ title: "", platform: "", year: "", image: null, pdf: null });
